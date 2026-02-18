@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sandhiya C | 3D AI Portfolio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;900&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+
+body{
+  background:#050010;
+  color:white;
+  overflow-x:hidden;
+  scroll-behavior:smooth;
+}
+
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:-1;
+}
+
+section{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:60px 20px;
+}
+
+h1{
+  font-size:65px;
+  background:linear-gradient(90deg,#ff4ecd,#c084fc,#9333ea);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+h2{
+  font-size:35px;
+  margin-bottom:20px;
+  color:#ff4ecd;
+}
+
+.card{
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(25px);
+  padding:40px;
+  border-radius:30px;
+  margin:20px 0;
+  max-width:900px;
+  box-shadow:0 0 50px rgba(255,0,200,0.4);
+  transition:0.4s;
+}
+
+.card:hover{
+  transform:translateY(-10px);
+  box-shadow:0 0 80px rgba(255,0,200,0.7);
+}
+
+.skills span{
+  display:inline-block;
+  margin:10px;
+  padding:12px 22px;
+  border-radius:30px;
+  background:linear-gradient(90deg,#ff4ecd,#9333ea);
+  font-size:14px;
+}
+
+button{
+  margin-top:20px;
+  padding:12px 30px;
+  border:none;
+  border-radius:30px;
+  background:#ff4ecd;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+button:hover{
+  transform:scale(1.1);
+  box-shadow:0 0 20px #ff4ecd;
+}
+
+footer{
+  padding:20px;
+  font-size:14px;
+  opacity:0.7;
+}
+</style>
+</head>
+<body>
+
+<section>
+<h1>Sandhiya C</h1>
+<h2>Aspiring AI Data Analyst & Web Developer</h2>
+<div class="card">
+<p>
+Motivated B.Sc. Computer Science student (2023–2026) from
+Krishnasamy College of Science, Arts and Management for Women – Cuddalore.
+Strong foundation in Python, Web Development and Data Analytics.
+Internship experience in Adobe Photoshop & Web Development at JD Net Technology.
+Leadership experience as Sports Club Head.
+</p>
+
+<p style="margin-top:15px;">
+📍 Cuddalore, Tamil Nadu<br>
+📧 sandhiyachandrasekar15@gmail.com
+</p>
+
+
+<button onclick="alert('Attach your resume PDF here')">Download Resume</button>
+</div>
+</section>
+
+<section>
+<h2>Technical Skills</h2>
+<div class="card skills">
+<span>Python (Basics)</span>
+<span>HTML (Basics)</span>
+<span>MS Office</span>
+<span>Data Analysis</span>
+<span>Machine Learning Fundamentals</span>
+<span>Oracle Database Foundations</span>
+</div>
+</section>
+
+<section>
+<h2>Project</h2>
+<div class="card">
+<p>
+<strong>Career Path Navigator</strong><br><br>
+An AI-driven platform that analyzes student interests and skills
+to suggest suitable career paths using structured logic and data insights.
+</p>
+</div>
+</section>
+
+<section>
+<h2>Certifications & Achievements</h2>
+<div class="card">
+<p>
+Infosys Springboard – Data Science:
+Python for Data Science, EDA, Data Visualization, ML Fundamentals<br><br>
+Oracle Database Foundations Associate<br><br>
+Industry Exposure:
+GTT Foundation (Barclays LifeSkills Programme),
+Industrial Visit – Askan Technologies,
+CodeBind Technical Webinars
+</p>
+</div>
+</section>
+
+<footer>
+© 2026 Sandhiya C | 3D Interactive AI Portfolio
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script>
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);
+const renderer = new THREE.WebGLRenderer({alpha:true});
+renderer.setSize(window.innerWidth,window.innerHeight);
+document.body.appendChild(renderer.domElement);
+camera.position.z = 5;
+
+// Particle system
+const particlesGeometry = new THREE.BufferGeometry();
+const particlesCount = 1500;
+const posArray = new Float32Array(particlesCount * 3);
+
+for(let i=0;i<particlesCount*3;i++){
+  posArray[i]=(Math.random()-0.5)*15;
+}
+
+particlesGeometry.setAttribute('position',new THREE.BufferAttribute(posArray,3));
+
+const particlesMaterial = new THREE.PointsMaterial({
+  size:0.02,
+  color:0xff4ecd
+});
+
+const particlesMesh = new THREE.Points(particlesGeometry,particlesMaterial);
+scene.add(particlesMesh);
+
+// Mouse glitter movement
+document.addEventListener("mousemove",(event)=>{
+  particlesMesh.rotation.y = event.clientX * 0.0005;
+  particlesMesh.rotation.x = event.clientY * 0.0005;
+});
+
+// Touch / Click Pink Burst
+window.addEventListener("click",()=>{
+  particlesMaterial.color.set(0xff0080);
+  setTimeout(()=>particlesMaterial.color.set(0xff4ecd),300);
+});
+
+function animate(){
+  requestAnimationFrame(animate);
+  particlesMesh.rotation.y += 0.0008;
+  renderer.render(scene,camera);
+}
+animate();
+</script>
+
+</body>
+</html>
+
